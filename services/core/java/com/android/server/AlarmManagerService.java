@@ -4274,7 +4274,10 @@ class AlarmManagerService extends SystemService {
                                     alarm.operation.getCreatorUid() :
                                     alarm.uid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> f985d26bd41... Enable NSRM (Network Socket Request Manager).
 =======
 >>>>>>> f985d26bd41... Enable NSRM (Network Socket Request Manager).
             if (allowWhileIdle) {

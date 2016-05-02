@@ -70,7 +70,10 @@ interface IPowerManager
     void setDozeAfterScreenOff(boolean on);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     void wakeUpWithProximityCheck(long time, String reason, String opPackageName);
+=======
+>>>>>>> f985d26bd41... Enable NSRM (Network Socket Request Manager).
 =======
 >>>>>>> f985d26bd41... Enable NSRM (Network Socket Request Manager).
     // update the uids being synchronized by network socket request manager
