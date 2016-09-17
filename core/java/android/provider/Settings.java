@@ -4251,10 +4251,29 @@ public final class Settings {
          */
 
         /**
+<<<<<<< HEAD
          * Whether to show the battery info on the lockscreen while charging
          * @hide
          */
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
+=======
+         * Value for button brightness.
+         * This is an integer value in a range between 0 and 255.
+         *      0 = off
+         *    255 = default
+         *    255 = max
+         * @hide
+         */
+        public static final String BUTTON_BRIGHTNESS = "button_brightness";
+
+        /**
+         * Whether user can enable/disable button brightness.
+         * <p>
+         * Type: int (0 for false, 1 for true)
+         * @hide
+         */
+        public static final String BUTTON_BRIGHTNESS_ENABLED = "button_brightness_enabled";
+>>>>>>> 2550de953f1... input: hardware buttons lights integration
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -4429,21 +4448,9 @@ public final class Settings {
             PRIVATE_SETTINGS.add(EGG_MODE);
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
-            PRIVATE_SETTINGS.add(NAVIGATION_BAR_ENABLED);
+            // New private settings.
             PRIVATE_SETTINGS.add(BUTTON_BRIGHTNESS);
             PRIVATE_SETTINGS.add(BUTTON_BRIGHTNESS_ENABLED);
-            PRIVATE_SETTINGS.add(KEY_HOME_LONG_PRESS_ACTION);
-            PRIVATE_SETTINGS.add(KEY_HOME_DOUBLE_TAP_ACTION);
-            PRIVATE_SETTINGS.add(KEY_MENU_LONG_PRESS_ACTION);
-            PRIVATE_SETTINGS.add(KEY_MENU_DOUBLE_TAP_ACTION);
-            PRIVATE_SETTINGS.add(KEY_BACK_LONG_PRESS_ACTION);
-            PRIVATE_SETTINGS.add(KEY_BACK_DOUBLE_TAP_ACTION);
-            PRIVATE_SETTINGS.add(KEY_ASSIST_LONG_PRESS_ACTION);
-            PRIVATE_SETTINGS.add(KEY_ASSIST_DOUBLE_TAP_ACTION);
-            PRIVATE_SETTINGS.add(KEY_APP_SWITCH_LONG_PRESS_ACTION);
-            PRIVATE_SETTINGS.add(KEY_APP_SWITCH_DOUBLE_TAP_ACTION);
-            PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
-            PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
         }
 
         /**
