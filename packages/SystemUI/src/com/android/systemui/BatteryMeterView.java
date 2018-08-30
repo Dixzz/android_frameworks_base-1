@@ -227,8 +227,7 @@ public class BatteryMeterView extends LinearLayout implements
     @Override
     public void onBatteryLevelChanged(int level, boolean pluggedIn, boolean charging) {
 
-        if (isCircleBattery()
-            || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT) {
+        if (isCircleBattery() || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT) {
             setForceShowPercent(pluggedIn);
         }
 
@@ -463,7 +462,7 @@ public class BatteryMeterView extends LinearLayout implements
                 break;
         }
 
-        if (forcePercentageQsHeader() || style == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT) {
+        if (style == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT) {
             mForceShowPercent = true;
         } else {
             mForceShowPercent = false;
