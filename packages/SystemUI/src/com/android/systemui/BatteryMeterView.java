@@ -84,6 +84,7 @@ public class BatteryMeterView extends LinearLayout implements
     private final int mFrameColor;
 
     private int mStyle = BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT;
+    private boolean mQsHeaderOrKeyguard;
 
     private int mShowPercentText;
     private boolean mCharging;
@@ -272,18 +273,24 @@ public class BatteryMeterView extends LinearLayout implements
     }
 
     private boolean forcePercentageQsHeader() {
-        return mQsHeaderOrKeyguard
-	       	&& ((mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT && mShowPercentText == 0)
-		|| mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN
+        return mQsHeaderOrKeyguard && (mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT
+                || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN
                 || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT
-                || (isCircleBattery() && mShowPercentText == 0));
+                || isCircleBattery());
     }
 
     private void updateShowPercent() {
-        final boolean showing = mBatteryPercentView != null;
-        if (forcePercentageQsHeader()
-                || ((mShowPercentText == 1) || mForceShowPercent)) {
-            if (!showing) {
+        final boolean hideText = Settings.Secure.getIntForUser(
+                getContext().getContentResolver(), STATUS_BAR_BATTERY_STYLE, 0, mUser) == 4;
+        final boolean showingText = Settings.Secure.getIntForUser(
+                getContext().getContentResolver(), STATUS_BAR_BATTERY_STYLE, 0, mUser) == 3;
+        final boolean showingInside = Settings.System.getIntForUser(
+                getContext().getContentResolver(), SHOW_BATTERY_PERCENT, 0, mUser) == 2;
+        final boolean showingOutside = mBatteryPercentView != null;
+        if (0 != Settings.System.getIntForUser(getContext().getContentResolver(),
+                SHOW_BATTERY_PERCENT, 0, mUser) || mForceShowPercent || showingText || hideText || forcePercentageQsHeader()) {
+            if (!showingOutside) {
+                mDrawable.setShowPercent(false);
                 mBatteryPercentView = loadPercentView();
                 if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
                 updatePercentText();
@@ -291,6 +298,16 @@ public class BatteryMeterView extends LinearLayout implements
                         new ViewGroup.LayoutParams(
                                 LayoutParams.WRAP_CONTENT,
                                 LayoutParams.MATCH_PARENT));
+            }
+            if (showingInside && !showingText && !mForceShowPercent && !forcePercentageQsHeader()) {
+                mDrawable.setShowPercent(true);
+                removeView(mBatteryPercentView);
+                mBatteryPercentView = null;
+            }
+            if (hideText && !showingText && !mForceShowPercent && !forcePercentageQsHeader()) {
+                mDrawable.setShowPercent(false);
+                removeView(mBatteryPercentView);
+                mBatteryPercentView = null;
             }
         } else {
             if (showing) {
@@ -401,6 +418,7 @@ public class BatteryMeterView extends LinearLayout implements
                 STATUS_BAR_BATTERY_STYLE, BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT, mUser);
             updateBatteryStyle();
             updateShowPercent();
+            mDrawable.refresh();
         }
     }
 
@@ -445,10 +463,8 @@ public class BatteryMeterView extends LinearLayout implements
                 break;
         }
 
-        if (forcePercentageQsHeader()
-                || style == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT
-                || ((isCircleBattery() || style == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT) && mCharging)) {
-   	    mForceShowPercent = true;
+        if (forcePercentageQsHeader() || style == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT) {
+            mForceShowPercent = true;
         } else {
             mForceShowPercent = false;
         }
