@@ -4778,14 +4778,6 @@ public final class PowerManagerService extends SystemService
                                                              mWakeLocks);
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> f985d26bd41... Enable NSRM (Network Socket Request Manager).
-=======
-
->>>>>>> f985d26bd41... Enable NSRM (Network Socket Request Manager).
     }
 
     @VisibleForTesting

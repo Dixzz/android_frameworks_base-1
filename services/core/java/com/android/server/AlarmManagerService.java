@@ -1872,16 +1872,6 @@ class AlarmManagerService extends SystemService {
                 ResultReceiver resultReceiver) {
             (new ShellCmd()).exec(this, in, out, err, args, callback, resultReceiver);
         }
-
-        @Override
-        /* updates the blocked uids, so if a wake lock is acquired to only fire
-         * alarm for it, it can be released.
-         */
-        public void updateBlockedUids(int uid, boolean isBlocked) {
-            synchronized(mLock) {
-                qcNsrmExt.processBlockedUids(uid, isBlocked, mWakeLock);
-            }
-        }
     };
 
     void dumpImpl(PrintWriter pw) {
@@ -4273,13 +4263,7 @@ class AlarmManagerService extends SystemService {
             qcNsrmExt.addTriggeredUid((alarm.operation != null) ?
                                     alarm.operation.getCreatorUid() :
                                     alarm.uid);
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> f985d26bd41... Enable NSRM (Network Socket Request Manager).
-=======
->>>>>>> f985d26bd41... Enable NSRM (Network Socket Request Manager).
             if (allowWhileIdle) {
                 // Record the last time this uid handled an ALLOW_WHILE_IDLE alarm.
                 mLastAllowWhileIdleDispatch.put(alarm.creatorUid, nowELAPSED);
